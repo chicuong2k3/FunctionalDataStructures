@@ -67,6 +67,8 @@ public record Queue<T> : IQueue<T>
         // reverse a stack takes O(n) time and O(n) space
         // where n is the number of elements in the stack
         return new Queue<T>(Stack<T>.Empty, _enqueueStack.Reverse());
+
+        // the amortized complexity of dequeue operation is O(1)
     }
 
     public IQueue<T> Enqueue(T item) => 
