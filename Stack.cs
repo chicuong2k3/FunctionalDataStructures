@@ -22,7 +22,7 @@ record Stack<T> : IStack<T>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public static readonly IStack<T> Empty = new EmptyStack();
+    public static IStack<T> Empty { get; } = new EmptyStack();
 
     public Stack(T item, IStack<T> tail)
     {
@@ -47,4 +47,15 @@ record Stack<T> : IStack<T>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public bool IsEmpty => false;
+}
+
+public static partial class Extensions
+{
+    public static IStack<T> Reverse<T>(this IStack<T> stack)
+    {
+        var reversed = Stack<T>.Empty;
+        for (var current = stack; !current.IsEmpty; current = current.Pop())
+            reversed = reversed.Push(current.Peek());
+        return reversed;
+    }
 }
